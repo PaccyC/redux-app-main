@@ -42,7 +42,20 @@ const removed = numbers.filter( n => n !== 2);
 // Updating
 const updated = numbers.map(n =>n ===2 ? 20 : n);
 
+ const recipe = {
+    name: "Spaghetti Bolognese",
+    ingredients: ["egg", "salt"]
+    }
 
+//   Adding a new ingredient
+const ingredientsAdd= [...recipe.ingredients, "cream"];
+
+// Updating ingredients
+
+const ingredientsUpdated = recipe.ingredients.map (ing => ing === "egg" ? "egg white": ing);
+
+// Removing existing ingredient
+const ingredientsRemove = recipe.ingredients.filter(ing => ing !== "egg")
 let book ={title:"Harry Potter"}
  function publish (book){
    return produce(book,draftBook =>{
