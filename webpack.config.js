@@ -1,17 +1,14 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'app.js',
+    filename: "app.js",
+    path: path.resolve(__dirname, "dist")
   },
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    port: 9000,
-    open: true, // Open the default browser when server starts
+    contentBase: path.join(__dirname, "dist"),
+    port: 9000
   },
   mode: "development"
 };
