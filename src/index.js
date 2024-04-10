@@ -1,6 +1,7 @@
-// import store from './store'
+import configureStore from './store/configureStore'
  
-// import {bugAdded,bugResolved} from './actions'
+import * as actions from './store/projects'
+
 // const unsubscribe=store.subscribe(()=>{
 //     console.log("State changed!",store.getState());
 // })
@@ -21,11 +22,16 @@
 
 
 // Using custom store
-import store from './customStore'
-import * as actions from './actions'
+
+const store= configureStore();
 
 store.subscribe(()=>{
     console.log("state changed");
 })
-store.dispatch(actions.bugAdded("BUG 1"))
+
+store.dispatch(actions.projectAdded({title:"Project 1"}))
+// store.dispatch(actions.bugAdded({description:"BUG 1"}))
+// store.dispatch(actions.bugAdded({description:"BUG 2"}))
+// store.dispatch(actions.bugAdded({description:"BUG 3"}))
+// store.dispatch(actions.bugResolved({id:2}))
 console.log(store.getState());
