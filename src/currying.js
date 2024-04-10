@@ -3,5 +3,5 @@ function add (a){
         return a+b;
     }
 }
-// Calling
+// Calling function
 add(1)(5);
