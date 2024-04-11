@@ -1,64 +1,50 @@
 
-import { createAction,createReducer } from '@reduxjs/toolkit'
- //Action creators
+import { createSlice,createSelector } from '@reduxjs/toolkit'
+let lastId=0
 
-
-
-// export function bugAdded(description){
-//     return {
-//         type:BUG_ADDED,
-//         payload:{
-//             description:description
-//         }
-//     }
-// }
-
-export const bugAdded = createAction("bugAdded",)
-export const bugResolved = createAction("bugResolved")
-export const bugRemoved = createAction("bugRemoved")
-
-
-// Reducer 
-
-let lastId=0;
-
- export default createReducer([],{
-    //key : value or (event) =>eventHandler
-
-    [bugAdded.type]: (bugs,action)=>{
-        bugs.push({
-            id: ++lastId,
-            description:action.payload.description,
-            resolved:false,
-        })
-    },
-    [bugResolved.type]:(bugs,action)=>{
-       const index= bugs.findIndex(bug => bug.id === action.payload.id)
-       bugs[index].resolved =true
+  const bugsSlice=createSlice  ({
+    name:"bugs",
+    initialState:[],
+    reducers:{
+        // Assign a bug to the team member(user)
+        bugAssignedToUser: (bugs,action)=>{
+            const  {bugId,userId} = action.payload
+            const index= bugs.findIndex(bug =>bug.id === bugId);
+            bugs[index].userId = userId;
+        },
+        bugAdded:(bugs,action)=>{
+            bugs.push({
+                id: ++lastId,
+                description:action.payload.description,
+                resolved:false,
+            })
+        },
+        bugResolved:(bugs,action)=>{
+            const index= bugs.findIndex(bug => bug.id === action.payload.id)
+            bugs[index].resolved =true
+        }
     }
-    
 })
 
-// //a pure function
-//  export default function reducer(state = [],action){
-   
-//     if (action.type === bugAdded.type) {
-//         return [...state,
-//             {
-//             id: ++lastId,
-//             description:action.payload.description,
-//             resolved:false,
-//         }]
-//     }
-//     else if (action.type === bugRemoved.type)
-//      return state.filter(bug => bug.id !== action.payload.id);
+export default bugsSlice.reducer
 
-//      else if (action.type === bugResolved.type){
-//         return state.map(bug => 
-//             bug.id !== action.payload.id ?bug :{...bug,resolved:true});
-//      }
+export const {bugAdded,bugResolved,bugAssignedToUser} =bugsSlice.actions
 
-    
-//     return state;
-    
+
+// Selector
+
+// export const unresolvedBugsSelector = state =>{
+//     return state.entities.bugs.filter(bug => !bug.resolved)
 // }
+
+
+  export const unresolvedBugsSelector= createSelector (
+    state =>state.entities.bugs,
+    bugs => bugs.filter(bug => !bug.resolved)
+   )
+
+ 
+   export const bugsByUserSelector = userId => createSelector(
+    state =>state.entities.bugs,
+    bugs =>bugs.filter(bug => bug.userId === userId)
+   )
