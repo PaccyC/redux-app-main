@@ -6,11 +6,11 @@ import {configureStore,getDefaultMiddleware} from '@reduxjs/toolkit'
  import func from './middlewares/func'
  import toast from './middlewares/toast'
 
-
+import api from './middlewares/api'
 
 export default function configureAppStore(){
  return configureStore({  reducer,
-           middleware:[...getDefaultMiddleware(),logger,toast] }
+           middleware:[...getDefaultMiddleware(),logger,toast,api] }
   )
       
 }

@@ -1,6 +1,10 @@
 import configureStore from './store/configureStore'
- 
+import * as actions from './store/api'
+import { loadBugs } from './store/bugs';
 const store = configureStore();
+
+store.dispatch(loadBugs());
+setTimeout(()=>store.dispatch(loadBugs()),2000)
 
 /*
 store.dispatch((dispatch,getState)=>{
@@ -16,11 +20,3 @@ store.dispatch({
     type:"error",
     payload:{message:"An Error occurred"}})
 
-store.dispatch({
-        type: "apiRequest",
-        payload:{
-            url:"/bugs",
-            onSuccess:"bugsReceived",
-            onError:"apiRequestError",
-        }
-    })
