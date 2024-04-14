@@ -2,7 +2,7 @@
 import { createSlice,createSelector } from '@reduxjs/toolkit'
 import { apiCallBegan } from './api';
 import moment from 'moment'
-let lastId=0
+
 
   const bugsSlice=createSlice  ({
     name:"bugs",
@@ -25,16 +25,12 @@ let lastId=0
         },
         // Assign a bug to the team member(user)
         bugAssignedToUser: (bugs,action)=>{
-            const  {bugId,userId} = action.payload
+            const  {id:bugId,userId} = action.payload
             const index= bugs.list.findIndex(bug =>bug.id === bugId);
             bugs.list[index].userId = userId;
         },
         bugAdded:(bugs,action)=>{
-            bugs.list.push({
-                id: ++lastId,
-                description:action.payload.description,
-                resolved:false,
-            })
+            bugs.list.push(action.payload)
         },
         bugResolved:(bugs,action)=>{
             const index= bugs.list.findIndex(bug => bug.id === action.payload.id)
@@ -45,7 +41,7 @@ let lastId=0
 
 export default bugsSlice.reducer
 
-export const {bugAdded,
+const {bugAdded,
     bugResolved,
     bugAssignedToUser,
     bugsReceived,
@@ -79,7 +75,30 @@ export const loadBugs  = () =>(dispatch,getState)=>{
     )
 }
 
+export const addBug = bug =>apiCallBegan({
+        url,
+        method:"POST",
+        data:bug,
+        onSuccess:bugAdded.type
+    })
 
+
+export const resolveBug = id =>apiCallBegan({
+        url: url + "/" + id,
+        method:"PATCH",
+        data:{resolved:true},
+        onSuccess:bugResolved.type
+    })
+
+
+
+export const assignBugToUser = (bugId,userId) => apiCallBegan({
+    url : url + "/" + bugId,
+    method: "PATCH",
+    data: {userId},
+    onSuccess:bugAssignedToUser.type
+
+})
 
 // Selector
 

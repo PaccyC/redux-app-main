@@ -5,4 +5,3 @@ export const apiCallSuccess = createAction("api/callSuccess");
 export const apiCallFailed = createAction("api/callFailed");
 
 
-export const toastMessage = createAction("error")
