@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.js"
+    "start": "webpack-dev-server --config ./webpack.config.js",
+    "test": "jest --watch"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,11 @@
     "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "@types/jest": "^29.5.12",
+    "babel-jest": "^29.7.0",
+    "jext": "^0.4.3",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"

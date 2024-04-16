@@ -2,7 +2,7 @@
 import { createSlice,createSelector } from '@reduxjs/toolkit'
 import { apiCallBegan } from './api';
 import moment from 'moment'
-
+import axios from 'axios';
 
   const bugsSlice=createSlice  ({
     name:"bugs",
@@ -41,7 +41,7 @@ import moment from 'moment'
 
 export default bugsSlice.reducer
 
-const {bugAdded,
+export const {bugAdded,
     bugResolved,
     bugAssignedToUser,
     bugsReceived,
@@ -74,6 +74,8 @@ export const loadBugs  = () =>(dispatch,getState)=>{
         })
     )
 }
+
+
 
 export const addBug = bug =>apiCallBegan({
         url,
