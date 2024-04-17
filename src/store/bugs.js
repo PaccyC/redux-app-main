@@ -76,13 +76,22 @@ export const loadBugs  = () =>(dispatch,getState)=>{
 }
 
 
+export const addBug = bug =>async dispatch =>{
+ const response= await axios.request({
+    baseURL:"http://localhost:9001/api",
+    url:"/bugs",
+    method:"POST",
+    data:bug
+ })
+ dispatch(bugAdded(response.data))
+}
 
-export const addBug = bug =>apiCallBegan({
-        url,
-        method:"POST",
-        data:bug,
-        onSuccess:bugAdded.type
-    })
+// export const addBug = bug =>apiCallBegan({
+//         url,
+//         method:"POST",
+//         data:bug,
+//         onSuccess:bugAdded.type
+//     })
 
 
 export const resolveBug = id =>apiCallBegan({
