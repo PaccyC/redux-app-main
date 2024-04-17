@@ -1,23 +1,23 @@
-import {addBug,bugAdded} from '../bugs'
-import {apiCallBegan} from '../api'
+import {addBug} from '../bugs'
+import  configureStore  from '../configureStore'
+import MockAdapter from 'axios-mock-adapter'
+import axios from 'axios'
 
 describe("bugs Slice",()=>{
-    describe('Action creators', () => {
-      it("Addbug",()=>{
-        const bug = {description:"a"}
-         const result = addBug(bug)
-         const expected ={
-          type:apiCallBegan.type,
-          payload:{
-            url: "/bugs",
-            method:'POST',
-            data:bug,
-            onSuccess: bugAdded.type
-          }
-         }
-         expect(result).toEqual(expected)
-      })
+  it("It should handle addBug function",async()=>{
+
+    const fakeAxios = new MockAdapter(axios)
+    fakeAxios.onPost('/bugs').reply(200)
+  const store= configureStore();
+  const bug= {description:'a'};
+  const saveBug = {...bug, id:1}
+  
+await  store.dispatch(addBug(bug));
+
+  console.log(store.getState());
+
+  expect(store.getState().entities.bugs.list).toHaveLength(1)
+  })
       
-    })
     
 })

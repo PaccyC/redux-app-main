@@ -3,7 +3,7 @@ const logger = store=>next=>action=>{
     console.log("Next",next);
     console.log("Action",action);
 
-    next(action)
+   return next(action)
 }
 
 
